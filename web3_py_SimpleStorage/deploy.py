@@ -64,10 +64,12 @@ abi = compiled_sol["contracts"]["SimpleStorage.sol"]["SimpleStorage"]["abi"]
 
 # For connecting to ganache
 print("Connecting to the Ganache Blockchain...")
-w3 = Web3(Web3.HTTPProvider("HTTP://127.0.0.1:7545"))
-chain_id = 1337
+w3 = Web3(
+    Web3.HTTPProvider("https://rinkeby.infura.io/v3/9fd4c178aa8a4981b450a7c13b884e74")
+)
+chain_id = 4
 
-my_address = "0xf3d57502E4F62e90c2e19183C46a3070E1cf461E"
+my_address = "0xbC4be766E30c59e0A04bbcf9D0C646968d4153f3"
 private_key = os.getenv("PRIVATE_KEY")
 # print(private_key)
 
