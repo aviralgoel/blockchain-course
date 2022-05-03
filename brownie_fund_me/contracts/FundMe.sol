@@ -14,6 +14,7 @@ contract FundMe {
 
     //mapping to store which address depositeded how much ETH
     mapping(address => uint256) public addressToAmountFunded;
+    AggregatorV3Interface public priceFeed;
     // array of addresses who deposited
     address[] public funders;
     //address of the owner (who deployed the contract)
@@ -21,8 +22,9 @@ contract FundMe {
 
     // the first person to deploy the contract is
     // the owner
-    constructor() public {
+    constructor(address _pricefeed) public {
         owner = msg.sender;
+        priceFeed = AggregatorV3Interface(_pricefeed);
     }
 
     function fund() public payable {
@@ -40,16 +42,10 @@ contract FundMe {
 
     //function to get the version of the chainlink pricefeed
     function getVersion() public view returns (uint256) {
-        AggregatorV3Interface priceFeed = AggregatorV3Interface(
-            0x8A753747A1Fa494EC906cE90E9f37563A8AF630e
-        );
         return priceFeed.version();
     }
 
     function getPrice() public view returns (uint256) {
-        AggregatorV3Interface priceFeed = AggregatorV3Interface(
-            0x8A753747A1Fa494EC906cE90E9f37563A8AF630e
-        );
         (, int256 answer, , , ) = priceFeed.latestRoundData();
         // ETH/USD rate in 18 digit
         return uint256(answer * 10000000000);
